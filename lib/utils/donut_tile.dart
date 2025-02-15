@@ -47,13 +47,54 @@ class DonutTile extends StatelessWidget {
               ),
               //IMAGEN DEL PRODUCTO
               Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 40, vertical: 12),
-                child: Image.asset(imageName),
-                )
+                padding:
+                    const EdgeInsets.symmetric(horizontal: 20, vertical: 6),
+                child: SizedBox(
+                    width: 500, // Ancho de la imagen
+                    height: 250, // Alto de la imagen
+                    child: Image.asset(imageName)),
+              ),
 
               //Tarea: Texto del sabor del producto
-
-              //Tarea: Iconos de "Me encanta"
+               Padding(
+                 padding: const EdgeInsets.symmetric(vertical: 5),
+                 child: Text(
+                   donutFlavor,
+                   style: TextStyle(
+                       fontSize: 28,
+                       fontWeight: FontWeight.bold,
+                       color: Colors.black),
+                 ),
+               ),
+              //Tarea: Iconos de "Me encanta" Hacer otro commit luego de terminar esto
+              Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 50),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    GestureDetector(
+                      onTap: () {
+                        print('Icono presionado');
+                      },
+                      child: Icon(Icons.favorite, size: 30)
+                      ),
+                    GestureDetector(
+                      onTap: () {
+                        print('Icono presionado');
+                      },
+                      child: Text(
+                        'ADD',
+                        style: TextStyle(
+                            decoration: TextDecoration.underline,
+                            fontSize: 28,
+                            fontWeight: FontWeight.bold,
+                            color: Colors.black),
+                      ),
+                    )
+                            
+                  ],
+                ),
+              )
             ],
           )),
     );
