@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-class BurguerTile extends StatelessWidget {
+class DonutTile extends StatelessWidget {
   final String donutFlavor;
   final String donutPrice;
   final dynamic donutColor;
