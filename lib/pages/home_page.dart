@@ -15,7 +15,12 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
+   int totalItems = 0;
+  double totalPrice = 0.0;
+
   List<Widget> myTabs = [
+
+    
     //donut tab
     const MyTab(
       iconPath: 'lib/icons/donut.png',
@@ -26,6 +31,13 @@ class _HomePageState extends State<HomePage> {
     const MyTab(iconPath: 'lib/icons/pancakes.png', tabName: 'Pankes'),
     const MyTab(iconPath: 'lib/icons/pizza.png', tabName: 'Pizza'),
   ];
+   void addToCart(double price) {
+    setState(() {
+      totalItems++;
+      totalPrice += price;
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return DefaultTabController(
@@ -71,11 +83,11 @@ class _HomePageState extends State<HomePage> {
 
             Expanded(
                 child: TabBarView(children: [
-              DonutTab(),
-              BurguerTab(),
-              SmoothieTab(),
-              PancakeTab(),
-              PizzaTab(),
+              DonutTab(addToCart: addToCart),
+              BurguerTab(addToCart: addToCart),
+              SmoothieTab(addToCart: addToCart),
+              PancakeTab(addToCart: addToCart),
+              PizzaTab(addToCart: addToCart),
             ])),
 
             //Carrito
@@ -85,13 +97,13 @@ class _HomePageState extends State<HomePage> {
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  const Padding(
+                   Padding(
                     padding: EdgeInsets.only(left: 28),
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Text(
-                          '2 Items |  \$45',
+                          '$totalItems Items |  \$${totalPrice.toStringAsFixed(2)}',
                           style: TextStyle(
                               fontSize: 18, fontWeight: FontWeight.bold),
                         ),

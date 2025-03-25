@@ -1,18 +1,20 @@
 import 'package:flutter/material.dart';
 
-class DonutTile extends StatelessWidget {
-  final String donutFlavor;
-  final String donutPrice;
-  final dynamic donutColor;
+class SmoothieTile extends StatelessWidget {
+  final String smoothieFlavor;
+  final double smoothiePrice;
+  final dynamic smoothieColor;
   final String imageName;
+  final Function(double) addToCart;
+
   //Valor fijo del border Radius 24
   final double borderRadius = 24.0;
 
-  const DonutTile(
+  const SmoothieTile(
       {super.key,
-      required this.donutFlavor,
-      required this.donutPrice,
-      this.donutColor,
+      required this.smoothieFlavor,
+      required this.smoothiePrice,
+      this.smoothieColor, required this.addToCart,
       required this.imageName});
 
   @override
@@ -21,7 +23,7 @@ class DonutTile extends StatelessWidget {
       padding: const EdgeInsets.all(12.0),
       child: Container(
           decoration: BoxDecoration(
-              color: donutColor[50],
+              color: smoothieColor[50],
               borderRadius: BorderRadius.circular(borderRadius)),
           child: Column(
             children: [
@@ -30,18 +32,20 @@ class DonutTile extends StatelessWidget {
                 children: [
                   Container(
                       decoration: BoxDecoration(
-                          color: donutColor[100],
+                          color: smoothieColor[100],
                           borderRadius: BorderRadius.only(
                               bottomLeft: Radius.circular(borderRadius),
                               topRight: Radius.circular(borderRadius))),
                       padding: const EdgeInsets.symmetric(
                           vertical: 8, horizontal: 18),
                       child: Text(
-                        '\$$donutPrice',
+                        smoothiePrice % 1 == 0
+      ? '\$${smoothiePrice.toInt()}'
+      : '\$${smoothiePrice.toStringAsFixed(2)}',
                         style: TextStyle(
                             fontSize: 18,
                             fontWeight: FontWeight.bold,
-                            color: donutColor[800]),
+                            color: smoothieColor[800]),
                       ))
                 ],
               ),
@@ -57,7 +61,7 @@ class DonutTile extends StatelessWidget {
                Padding(
                  padding: const EdgeInsets.symmetric(vertical: 5),
                  child: Text(
-                   donutFlavor,
+                   smoothieFlavor,
                    style: TextStyle(
                        fontSize: 28,
                        fontWeight: FontWeight.bold,
@@ -78,7 +82,7 @@ class DonutTile extends StatelessWidget {
                       ),
                     GestureDetector(
                       onTap: () {
-                        print('Icono presionado');
+                       addToCart(smoothiePrice); 
                       },
                       child: Text(
                         'ADD',

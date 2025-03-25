@@ -1,21 +1,21 @@
 import 'package:flutter/material.dart';
 
-class DonutTile extends StatelessWidget {
-  final String donutFlavor;
-  final double donutPrice;
-  final dynamic donutColor;
+class BurguerTile extends StatelessWidget {
+  final String burguerFlavor;
+  final double burguerPrice;
+  final dynamic burguerColor;
   final String imageName;
   final Function(double) addToCart;
-
   //Valor fijo del border Radius 24
   final double borderRadius = 24.0;
 
-  const DonutTile(
+  const BurguerTile(
       {super.key,
-      required this.donutFlavor,
-      required this.donutPrice,
-      this.donutColor, required this.addToCart,
-      required this.imageName});
+      required this.burguerFlavor,
+      required this.burguerPrice,
+      this.burguerColor,
+      required this.imageName, required this.addToCart,
+      });
 
   @override
   Widget build(BuildContext context) {
@@ -23,7 +23,7 @@ class DonutTile extends StatelessWidget {
       padding: const EdgeInsets.all(12.0),
       child: Container(
           decoration: BoxDecoration(
-              color: donutColor[50],
+              color: burguerColor[50],
               borderRadius: BorderRadius.circular(borderRadius)),
           child: Column(
             children: [
@@ -32,20 +32,20 @@ class DonutTile extends StatelessWidget {
                 children: [
                   Container(
                       decoration: BoxDecoration(
-                          color: donutColor[100],
+                          color: burguerColor[100],
                           borderRadius: BorderRadius.only(
                               bottomLeft: Radius.circular(borderRadius),
                               topRight: Radius.circular(borderRadius))),
                       padding: const EdgeInsets.symmetric(
                           vertical: 8, horizontal: 18),
                       child: Text(
-                        donutPrice % 1 == 0
-      ? '\$${donutPrice.toInt()}'
-      : '\$${donutPrice.toStringAsFixed(2)}',
+                        burguerPrice % 1 == 0
+      ? '\$${burguerPrice.toInt()}'
+      : '\$${burguerPrice.toStringAsFixed(2)}',
                         style: TextStyle(
                             fontSize: 18,
                             fontWeight: FontWeight.bold,
-                            color: donutColor[800]),
+                            color: burguerColor[800]),
                       ))
                 ],
               ),
@@ -61,7 +61,7 @@ class DonutTile extends StatelessWidget {
                Padding(
                  padding: const EdgeInsets.symmetric(vertical: 5),
                  child: Text(
-                   donutFlavor,
+                   burguerFlavor,
                    style: TextStyle(
                        fontSize: 28,
                        fontWeight: FontWeight.bold,
@@ -82,7 +82,7 @@ class DonutTile extends StatelessWidget {
                       ),
                     GestureDetector(
                       onTap: () {
-                       addToCart(donutPrice); 
+                       addToCart(burguerPrice); 
                       },
                       child: Text(
                         'ADD',

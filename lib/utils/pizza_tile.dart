@@ -1,20 +1,19 @@
 import 'package:flutter/material.dart';
 
-class DonutTile extends StatelessWidget {
-  final String donutFlavor;
-  final double donutPrice;
-  final dynamic donutColor;
+class PizzaTile extends StatelessWidget {
+  final String pizzaFlavor;
+  final double pizzaPrice;
+  final dynamic pizzaColor;
   final String imageName;
   final Function(double) addToCart;
-
   //Valor fijo del border Radius 24
   final double borderRadius = 24.0;
 
-  const DonutTile(
+  const PizzaTile(
       {super.key,
-      required this.donutFlavor,
-      required this.donutPrice,
-      this.donutColor, required this.addToCart,
+      required this.pizzaFlavor,
+      required this.pizzaPrice,
+      this.pizzaColor, required this.addToCart,
       required this.imageName});
 
   @override
@@ -23,7 +22,7 @@ class DonutTile extends StatelessWidget {
       padding: const EdgeInsets.all(12.0),
       child: Container(
           decoration: BoxDecoration(
-              color: donutColor[50],
+              color: pizzaColor[50],
               borderRadius: BorderRadius.circular(borderRadius)),
           child: Column(
             children: [
@@ -32,20 +31,20 @@ class DonutTile extends StatelessWidget {
                 children: [
                   Container(
                       decoration: BoxDecoration(
-                          color: donutColor[100],
+                          color: pizzaColor[100],
                           borderRadius: BorderRadius.only(
                               bottomLeft: Radius.circular(borderRadius),
                               topRight: Radius.circular(borderRadius))),
                       padding: const EdgeInsets.symmetric(
                           vertical: 8, horizontal: 18),
                       child: Text(
-                        donutPrice % 1 == 0
-      ? '\$${donutPrice.toInt()}'
-      : '\$${donutPrice.toStringAsFixed(2)}',
+                        pizzaPrice % 1 == 0
+      ? '\$${pizzaPrice.toInt()}'
+      : '\$${pizzaPrice.toStringAsFixed(2)}',
                         style: TextStyle(
                             fontSize: 18,
                             fontWeight: FontWeight.bold,
-                            color: donutColor[800]),
+                            color: pizzaColor[800]),
                       ))
                 ],
               ),
@@ -61,7 +60,7 @@ class DonutTile extends StatelessWidget {
                Padding(
                  padding: const EdgeInsets.symmetric(vertical: 5),
                  child: Text(
-                   donutFlavor,
+                   pizzaFlavor,
                    style: TextStyle(
                        fontSize: 28,
                        fontWeight: FontWeight.bold,
@@ -82,7 +81,7 @@ class DonutTile extends StatelessWidget {
                       ),
                     GestureDetector(
                       onTap: () {
-                       addToCart(donutPrice); 
+                       addToCart(pizzaPrice); 
                       },
                       child: Text(
                         'ADD',
