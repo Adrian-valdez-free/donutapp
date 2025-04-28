@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "148293845200",
+    "project_id": "pruebasxdxddxdxdx",
+    "storage_bucket": "pruebasxdxddxdxdx.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:148293845200:android:7e048039a508c73f789ed5",
+        "android_client_info": {
+          "package_name": "com.example.donutapp"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDIGnBSIGWw-1j-dMO9wCY5RJHYaxPedCI"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

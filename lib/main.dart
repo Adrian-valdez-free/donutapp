@@ -1,3 +1,4 @@
+import 'package:donutapp/pages/Login.dart';
 import 'package:flutter/material.dart';
 
 import 'pages/home_page.dart';
@@ -24,7 +25,7 @@ class MyApp extends StatelessWidget {
 
         
       ),
-      home: const HomePage(),
+      home: const LogIn(),
     );
   }
 }
