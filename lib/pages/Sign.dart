@@ -1,7 +1,8 @@
 import 'package:donutapp/pages/Login.dart';
+import 'package:donutapp/pages/home_page.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
-
 
 class Signup extends StatefulWidget {
   const Signup({super.key});
@@ -17,13 +18,24 @@ class _SignupState extends State<Signup> {
   TextEditingController passwordcontroller = new TextEditingController();
   TextEditingController mailcontroller = new TextEditingController();
 
-  final _formkey= GlobalKey<FormState>();
+  final _formkey = GlobalKey<FormState>();
 
   registration() async {
+    print("Registration started");
     if (password != null) {
       try {
         UserCredential userCredential = await FirebaseAuth.instance
             .createUserWithEmailAndPassword(email: email, password: password);
+
+        User? user = FirebaseAuth.instance.currentUser;
+        if (user != null && !user.emailVerified) {
+          await user.sendEmailVerification();
+        }
+
+        FirebaseFirestore.instance.collection('users').doc(user!.uid).set({
+          'name': name,
+          'email': email,
+        });
 
         ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(
@@ -35,7 +47,8 @@ class _SignupState extends State<Signup> {
           ),
         );
         // ignore: use_build_context_synchronously
-        Navigator.pushReplacement(context, MaterialPageRoute(builder: (context)=> LogIn()));
+        Navigator.pushReplacement(
+            context, MaterialPageRoute(builder: (context) => HomePage()));
       } on FirebaseException catch (e) {
         if (e.code == 'weak-password') {
           ScaffoldMessenger.of(context).showSnackBar(SnackBar(
@@ -45,11 +58,11 @@ class _SignupState extends State<Signup> {
           )));
         } else if (e.code == 'email-already-in-use') {
           ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-            backgroundColor: Colors.orange,
+              backgroundColor: Colors.orange,
               content: Text(
-            "Account already exsists",
-            style: TextStyle(fontSize: 18.0),
-          )));
+                "Account already exsists",
+                style: TextStyle(fontSize: 18.0),
+              )));
         }
       }
     }
@@ -118,80 +131,80 @@ class _SignupState extends State<Signup> {
                             Text(
                               "Sign up",
                               style: TextStyle(
-                                                color: Colors.white,
-                                                fontSize: 18.0,
-                                                fontFamily: 'Poppins1',
-                                                fontWeight: FontWeight.bold),
+                                  color: Colors.black,
+                                  fontSize: 18.0,
+                                  fontFamily: 'Poppins1',
+                                  fontWeight: FontWeight.bold),
                             ),
                             SizedBox(
                               height: 30.0,
                             ),
                             TextFormField(
-                              controller: namecontroller,
-                              validator: (value) {
-                                if(value==null|| value.isEmpty){
-                                  return 'Please enter your E-mail'; 
-                                }
-                                return null;
-                              },
+                                controller: namecontroller,
+                                validator: (value) {
+                                  if (value == null || value.isEmpty) {
+                                    return 'Please enter your name';
+                                  }
+                                  return null;
+                                },
                                 decoration: InputDecoration(
                                     hintText: 'Name',
                                     hintStyle: TextStyle(
-                                                color: Colors.white,
-                                                fontSize: 18.0,
-                                                fontFamily: 'Poppins1',
-                                                fontWeight: FontWeight.bold),
+                                        color: Colors.black,
+                                        fontSize: 18.0,
+                                        fontFamily: 'Poppins1',
+                                        fontWeight: FontWeight.bold),
                                     prefixIcon: Icon(Icons.person_2_outlined))),
                             SizedBox(
                               height: 30.0,
                             ),
                             TextFormField(
-                              controller: mailcontroller,
-                              validator: (value) {
-                                if(value==null|| value.isEmpty){
-                                  return 'Please enter your Email';
-                                }
+                                controller: mailcontroller,
+                                validator: (value) {
+                                  if (value == null || value.isEmpty) {
+                                    return 'Please enter your Email';
+                                  }
                                   return null;
                                 },
                                 decoration: InputDecoration(
                                     hintText: 'Email',
                                     hintStyle: TextStyle(
-                                                color: Colors.white,
-                                                fontSize: 18.0,
-                                                fontFamily: 'Poppins1',
-                                                fontWeight: FontWeight.bold),
+                                        color: Colors.black,
+                                        fontSize: 18.0,
+                                        fontFamily: 'Poppins1',
+                                        fontWeight: FontWeight.bold),
                                     prefixIcon: Icon(Icons.email_outlined))),
                             SizedBox(
                               height: 30.0,
                             ),
                             TextFormField(
-                              controller: passwordcontroller,
-                              validator: (value) {
-                                if(value==null|| value.isEmpty){
-                                  return 'Please enter your password';
-                                }
+                                controller: passwordcontroller,
+                                validator: (value) {
+                                  if (value == null || value.isEmpty) {
+                                    return 'Please enter your password';
+                                  }
                                   return null;
                                 },
                                 obscureText: true,
                                 decoration: InputDecoration(
                                     hintText: 'Password',
-                                    hintStyle:TextStyle(
-                                                color: Colors.white,
-                                                fontSize: 18.0,
-                                                fontFamily: 'Poppins1',
-                                                fontWeight: FontWeight.bold),
+                                    hintStyle: TextStyle(
+                                        color: Colors.black,
+                                        fontSize: 18.0,
+                                        fontFamily: 'Poppins1',
+                                        fontWeight: FontWeight.bold),
                                     prefixIcon: Icon(Icons.password_outlined))),
                             SizedBox(
                               height: 20.0,
                             ),
                             SizedBox(height: 80.0),
                             GestureDetector(
-                              onTap: ()async{
-                                if(_formkey.currentState!.validate()){
+                              onTap: () async {
+                                if (_formkey.currentState!.validate()) {
                                   setState(() {
-                                    email=mailcontroller.text;
-                                    name=namecontroller.text;
-                                    password=passwordcontroller.text;
+                                    email = mailcontroller.text;
+                                    name = namecontroller.text;
+                                    password = passwordcontroller.text;
                                   });
                                 }
                                 registration();
@@ -204,7 +217,8 @@ class _SignupState extends State<Signup> {
                                     width: 200,
                                     decoration: BoxDecoration(
                                         color: Color(0xffff5722),
-                                        borderRadius: BorderRadius.circular(20)),
+                                        borderRadius:
+                                            BorderRadius.circular(20)),
                                     child: Center(
                                         child: Text("Sign Up",
                                             style: TextStyle(
@@ -229,11 +243,11 @@ class _SignupState extends State<Signup> {
                       },
                       child: Text(
                         "Already have an account? Login",
-                        style:TextStyle(
-                                                color: Colors.white,
-                                                fontSize: 18.0,
-                                                fontFamily: 'Poppins1',
-                                                fontWeight: FontWeight.bold),
+                        style: TextStyle(
+                            color: Colors.black,
+                            fontSize: 18.0,
+                            fontFamily: 'Poppins1',
+                            fontWeight: FontWeight.bold),
                       ))
                 ],
               ),

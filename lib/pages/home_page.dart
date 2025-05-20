@@ -1,3 +1,4 @@
+import 'package:donutapp/pages/perfil.dart';
 import 'package:donutapp/utils/my_tab.dart';
 import 'package:flutter/material.dart';
 
@@ -43,20 +44,43 @@ class _HomePageState extends State<HomePage> {
     return DefaultTabController(
       length: 5,
       child: Scaffold(
-        appBar: AppBar(
-          backgroundColor: Colors.transparent,
-          leading: Icon(
-            Icons.menu,
-            color: Colors.grey[800],
-          ),
-          actions: [
-            Padding(
-              // le da padding a la derecha
-              padding: const EdgeInsets.only(right: 12.0),
-              child: IconButton(onPressed: () {}, icon: Icon(Icons.person)),
-            )
-          ],
+          drawer: Drawer(
+    child: ListView(
+      padding: EdgeInsets.zero,
+      children: [
+        DrawerHeader(
+          decoration: BoxDecoration(color: Colors.pinkAccent),
+          child: Text('Menú', style: TextStyle(color: Colors.white, fontSize: 24)),
         ),
+        ListTile(
+          leading: Icon(Icons.home),
+          title: Text('Home'),
+         onTap: () => Navigator.pushReplacement(
+                  context,
+                  MaterialPageRoute(builder: (context) => HomePage()),
+                ),
+        ),
+      ],
+    ),
+  ),
+  appBar: AppBar(
+    backgroundColor: Colors.transparent,
+    elevation: 0,
+    leading: Builder(
+      builder: (context) => IconButton(
+        icon: Icon(Icons.menu, color: Colors.grey[800]),
+        onPressed: () => Scaffold.of(context).openDrawer(),
+      ),
+    ),
+    actions: [
+      Padding(
+        padding: const EdgeInsets.only(right: 12.0),
+        child: IconButton(onPressed: () { Navigator.push(context,
+                            MaterialPageRoute(builder: (context) => UserPage()));}, icon: Icon(Icons.person)),
+      )
+    ],
+  ),
+
         body: Column(
           children: [
             //text

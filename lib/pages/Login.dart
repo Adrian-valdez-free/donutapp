@@ -106,7 +106,7 @@ class _LogInState extends State<LogIn> {
                             Text(
                               "Login",
                               style:TextStyle(
-                                                color: Colors.white,
+                                                color: Colors.black,
                                                 fontSize: 18.0,
                                                 fontFamily: 'Poppins1',
                                                 fontWeight: FontWeight.bold),
@@ -126,7 +126,7 @@ class _LogInState extends State<LogIn> {
                                     hintText: 'Email',
                                     hintStyle:
                                         TextStyle(
-                                                color: Colors.white,
+                                                color: Colors.black,
                                                 fontSize: 18.0,
                                                 fontFamily: 'Poppins1',
                                                 fontWeight: FontWeight.bold),
@@ -147,7 +147,7 @@ class _LogInState extends State<LogIn> {
                                     hintText: 'Password',
                                     hintStyle:
                                         TextStyle(
-                                                color: Colors.white,
+                                                color: Colors.black,
                                                 fontSize: 18.0,
                                                 fontFamily: 'Poppins1',
                                                 fontWeight: FontWeight.bold),
@@ -168,7 +168,7 @@ class _LogInState extends State<LogIn> {
                                   child: Text("Forgot password",
                                       style:
                                           TextStyle(
-                                                color: Colors.white,
+                                                color: Colors.black,
                                                 fontSize: 18.0,
                                                 fontFamily: 'Poppins1',
                                                 fontWeight: FontWeight.bold))),
@@ -219,7 +219,7 @@ class _LogInState extends State<LogIn> {
                       child: Text(
                         "Don't have a an acccount? Sign up",
                         style: TextStyle(
-                                                color: Colors.white,
+                                                color: Colors.black,
                                                 fontSize: 18.0,
                                                 fontFamily: 'Poppins1',
                                                 fontWeight: FontWeight.bold),
