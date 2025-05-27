@@ -4,6 +4,7 @@ import 'package:donutapp/pages/forgotpassword.dart';
 import 'package:donutapp/pages/home_page.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:google_sign_in/google_sign_in.dart';
 
 class LogIn extends StatefulWidget {
   const LogIn({super.key});
@@ -21,27 +22,47 @@ class _LogInState extends State<LogIn> {
   final _formkey = GlobalKey<FormState>();
 
   userLogin() async {
-    try {
-      await FirebaseAuth.instance
-          .signInWithEmailAndPassword(email: email, password: password);
-      Navigator.pushReplacement(
-          context, MaterialPageRoute(builder: (context) => HomePage()));
-    } on FirebaseException catch (e) {
-      if (e.code == 'user-not-found') {
-        ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-            content: Text(
-          "No User Found for that email",
+  try {
+    UserCredential userCredential = await FirebaseAuth.instance
+        .signInWithEmailAndPassword(email: email, password: password);
+    
+    User? user = userCredential.user;
+
+    if (user != null && !user.emailVerified) {
+      await FirebaseAuth.instance.signOut();
+      ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+        content: Text(
+          "Correo no verificado. Por favor revisa tu email.",
           style: TextStyle(fontSize: 18.0, color: Colors.black),
-        )));
-      } else if (e.code == 'wrong-password') {
-        ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-            content: Text(
-          "Wrong password provided by user",
-          style: TextStyle(fontSize: 18.0, color: Colors.black),
-        )));
-      }
+        ),
+        backgroundColor: Colors.orangeAccent,
+      ));
+      return;
     }
+
+    Navigator.pushReplacement(
+      context,
+      MaterialPageRoute(builder: (context) => HomePage()),
+    );
+  } on FirebaseAuthException catch (e) {
+    String message = "Ocurrió un error";
+
+    if (e.code == 'user-not-found') {
+      message = "No se encontró ningún usuario con ese correo.";
+    } else if (e.code == 'wrong-password') {
+      message = "Contraseña incorrecta.";
+    }
+
+    ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+      content: Text(
+        message,
+        style: TextStyle(fontSize: 18.0, color: Colors.black),
+      ),
+      backgroundColor: Colors.redAccent,
+    ));
   }
+}
+
 
   @override
   Widget build(BuildContext context) {
@@ -208,6 +229,88 @@ class _LogInState extends State<LogIn> {
                       ),
                     ),
                   ),
+                  SizedBox(height: 20),
+GestureDetector(
+onTap: () async {
+  try {
+    final GoogleSignInAccount? googleUser = await GoogleSignIn().signIn();
+    if (googleUser == null) return;
+
+    final GoogleSignInAuthentication googleAuth = await googleUser.authentication;
+
+    final credential = GoogleAuthProvider.credential(
+      accessToken: googleAuth.accessToken,
+      idToken: googleAuth.idToken,
+    );
+
+    UserCredential userCredential = await FirebaseAuth.instance.signInWithCredential(credential);
+    User? user = userCredential.user;
+
+    // ⚠️ Verifica que el usuario no sea nulo
+    if (user != null) {
+      DocumentSnapshot userDoc = await FirebaseFirestore.instance
+          .collection('users')
+          .doc(user.uid)
+          .get();
+
+      if (!userDoc.exists) {
+        // 📝 Si el usuario no existe, lo creamos
+        await FirebaseFirestore.instance.collection('users').doc(user.uid).set({
+          'name': user.displayName ?? '',
+          'email': user.email ?? '',
+          'photoURL': user.photoURL ?? '',
+          'createdAt': FieldValue.serverTimestamp(),
+        });
+      }
+
+      Navigator.pushReplacement(
+        context,
+        MaterialPageRoute(builder: (context) => HomePage()),
+      );
+    }
+  } catch (e) {
+    ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+      content: Text(
+        "Error signing in with Google",
+        style: TextStyle(fontSize: 18.0, color: Colors.black),
+      ),
+    ));
+  }
+},
+
+  child: Material(
+    elevation: 5.0,
+    borderRadius: BorderRadius.circular(20),
+    child: Container(
+      padding: EdgeInsets.symmetric(vertical: 8),
+      width: 250,
+      decoration: BoxDecoration(
+          color: Colors.white,
+          borderRadius: BorderRadius.circular(20),
+          border: Border.all(color: Colors.black)),
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          Image.asset(
+            'images/google.png', // asegúrate de tener este ícono en assets
+            height: 24,
+          ),
+          SizedBox(width: 10),
+          Text(
+            "Sign in with Google",
+            style: TextStyle(
+                color: Colors.black,
+                fontSize: 18.0,
+                fontFamily: 'Poppins1',
+                fontWeight: FontWeight.bold),
+          ),
+        ],
+      ),
+    ),
+  ),
+),
+
+                  
                   SizedBox(
                     height: 70.0,
                   ),
@@ -227,9 +330,11 @@ class _LogInState extends State<LogIn> {
                 ],
               ),
             )
+            
           ],
         ),
       ),
+      
     );
   }
 }

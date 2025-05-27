@@ -209,7 +209,7 @@ class _UpdatePasswordScreenState extends State<UpdatePasswordScreen> {
                     ),
                     const SizedBox(width: 8),
                     const Text('One special character'),
-                  
+                  //HOLAsdsad
                 const SizedBox(height: 8),
                 
                   

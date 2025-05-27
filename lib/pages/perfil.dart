@@ -1,3 +1,5 @@
+import 'package:donutapp/pages/Login.dart';
+import 'package:donutapp/pages/ModPerfil.dart';
 import 'package:donutapp/pages/forgot_password_screen.dart';
 import 'package:donutapp/pages/home_page.dart';
 import 'package:flutter/material.dart';
@@ -12,6 +14,7 @@ class UserPage extends StatefulWidget {
 }
 
 class _UserPageState extends State<UserPage> {
+  String photoURL = '';
   String nombre = '';
   String correo = '';
 
@@ -34,6 +37,7 @@ class _UserPageState extends State<UserPage> {
           setState(() {
             nombre = doc.data()?['name'] ?? 'Sin nombre';
             correo = doc.data()?['email'] ?? 'Sin correo';
+            photoURL = doc.data()?['photoURL'] ?? '';
           });
         }
       }
@@ -64,6 +68,17 @@ class _UserPageState extends State<UserPage> {
                   MaterialPageRoute(builder: (context) => HomePage()),
                 ),
               ),
+              ListTile(
+        leading: Icon(Icons.logout),
+        title: Text('Cerrar sesión'),
+        onTap: () async {
+          await FirebaseAuth.instance.signOut();
+          Navigator.pushReplacement(
+            context,
+            MaterialPageRoute(builder: (context) => LogIn()), // asegúrate de importar esta pantalla
+          );
+        },
+      ),
             ],
           ),
         ),
@@ -101,8 +116,15 @@ class _UserPageState extends State<UserPage> {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Center(
-                    child: Icon(Icons.account_circle,
-                        size: 100, color: Colors.grey),
+                    child: CircleAvatar(
+                      radius: 50,
+                      backgroundImage:
+                          photoURL.isNotEmpty ? NetworkImage(photoURL) : null,
+                      child: photoURL.isEmpty
+                          ? Icon(Icons.account_circle,
+                              size: 100, color: Colors.grey)
+                          : null,
+                    ),
                   ),
                   const SizedBox(height: 20),
                   Text("Nombre: $nombre", style: TextStyle(fontSize: 18)),
@@ -110,14 +132,30 @@ class _UserPageState extends State<UserPage> {
                   Text("Correo: $correo", style: TextStyle(fontSize: 18)),
                   ElevatedButton.icon(
                     onPressed: () {
-                    Navigator.push(context,
-                        MaterialPageRoute(builder: (context) => UpdatePasswordScreen()));
-                  },
+                      Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) => UpdatePasswordScreen()));
+                    },
                     icon: const Icon(Icons.lock_reset),
                     label: const Text('Restablecer Contraseña'),
                     style:
                         ElevatedButton.styleFrom(backgroundColor: Colors.pink),
-                  )
+                  ),
+                  const SizedBox(height: 10),
+                  ElevatedButton.icon(
+                    onPressed: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) => EditProfileScreen()),
+                      );
+                    },
+                    icon: Icon(Icons.edit),
+                    label: Text('Modificar Perfil'),
+                    style: ElevatedButton.styleFrom(
+                        backgroundColor: Colors.pinkAccent),
+                  ),
                 ],
               ),
             ),

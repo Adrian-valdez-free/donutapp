@@ -1,5 +1,7 @@
+import 'package:donutapp/pages/Login.dart';
 import 'package:donutapp/pages/perfil.dart';
 import 'package:donutapp/utils/my_tab.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
 import '../tabs/burguer_tab.dart';
@@ -60,6 +62,17 @@ class _HomePageState extends State<HomePage> {
                   MaterialPageRoute(builder: (context) => HomePage()),
                 ),
         ),
+           ListTile(
+        leading: Icon(Icons.logout),
+        title: Text('Cerrar sesión'),
+        onTap: () async {
+          await FirebaseAuth.instance.signOut();
+          Navigator.pushReplacement(
+            context,
+            MaterialPageRoute(builder: (context) => LogIn()), // asegúrate de importar esta pantalla
+          );
+        },
+      ),
       ],
     ),
   ),
