@@ -104,12 +104,12 @@ class _SignupState extends State<Signup> {
                 children: [
                   Center(
                       child: Image.asset(
-                    "images/logo.png",
-                    width: MediaQuery.of(context).size.width / 1.5,
+                    "lib/images/logo.png",
+                    width: MediaQuery.of(context).size.width / 2,
                     fit: BoxFit.cover,
                   )),
                   SizedBox(
-                    height: 50.0,
+                    height: 20.0,
                   ),
                   Material(
                     elevation: 5.0,
@@ -117,7 +117,7 @@ class _SignupState extends State<Signup> {
                     child: Container(
                       padding: EdgeInsets.only(left: 20.0, right: 20.0),
                       width: MediaQuery.of(context).size.width,
-                      height: MediaQuery.of(context).size.height / 1.9,
+                      height: MediaQuery.of(context).size.height / 2.1,
                       decoration: BoxDecoration(
                           color: Colors.white,
                           borderRadius: BorderRadius.circular(20)),
@@ -126,7 +126,7 @@ class _SignupState extends State<Signup> {
                         child: Column(
                           children: [
                             SizedBox(
-                              height: 30.0,
+                              height: 10.0,
                             ),
                             Text(
                               "Sign up",
@@ -137,7 +137,7 @@ class _SignupState extends State<Signup> {
                                   fontWeight: FontWeight.bold),
                             ),
                             SizedBox(
-                              height: 30.0,
+                              height: 10.0,
                             ),
                             TextFormField(
                                 controller: namecontroller,
@@ -156,7 +156,7 @@ class _SignupState extends State<Signup> {
                                         fontWeight: FontWeight.bold),
                                     prefixIcon: Icon(Icons.person_2_outlined))),
                             SizedBox(
-                              height: 30.0,
+                              height: 20.0,
                             ),
                             TextFormField(
                                 controller: mailcontroller,
@@ -175,7 +175,7 @@ class _SignupState extends State<Signup> {
                                         fontWeight: FontWeight.bold),
                                     prefixIcon: Icon(Icons.email_outlined))),
                             SizedBox(
-                              height: 30.0,
+                              height: 20.0,
                             ),
                             TextFormField(
                                 controller: passwordcontroller,
@@ -197,7 +197,7 @@ class _SignupState extends State<Signup> {
                             SizedBox(
                               height: 20.0,
                             ),
-                            SizedBox(height: 80.0),
+                            SizedBox(height: 30.0),
                             GestureDetector(
                               onTap: () async {
                                 if (_formkey.currentState!.validate()) {
@@ -234,7 +234,7 @@ class _SignupState extends State<Signup> {
                     ),
                   ),
                   SizedBox(
-                    height: 70.0,
+                    height: 50.0,
                   ),
                   GestureDetector(
                       onTap: () {

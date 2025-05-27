@@ -84,7 +84,7 @@ class _LogInState extends State<LogIn> {
             ),
             Container(
               margin:
-                  EdgeInsets.only(top: MediaQuery.of(context).size.height / 3),
+                  EdgeInsets.only(top: MediaQuery.of(context).size.height / 2),
               height: MediaQuery.of(context).size.height / 2,
               width: MediaQuery.of(context).size.width,
               decoration: BoxDecoration(
@@ -95,17 +95,17 @@ class _LogInState extends State<LogIn> {
               child: Text(""),
             ),
             Container(
-              margin: EdgeInsets.only(top: 60.0, left: 20.0, right: 20.0),
+              margin: EdgeInsets.only(top: 40.0, left: 20.0, right: 20.0),
               child: Column(
                 children: [
                   Center(
                       child: Image.asset(
-                    "images/logo.png",
-                    width: MediaQuery.of(context).size.width / 1.5,
+                    "lib/images/logo.png",
+                    width: MediaQuery.of(context).size.width / 2.5,
                     fit: BoxFit.cover,
                   )),
                   SizedBox(
-                    height: 50.0,
+                    height: 20.0,
                   ),
                   Material(
                     elevation: 5.0,
@@ -194,7 +194,7 @@ class _LogInState extends State<LogIn> {
                                                 fontFamily: 'Poppins1',
                                                 fontWeight: FontWeight.bold))),
                             ),
-                            SizedBox(height: 80.0),
+                            SizedBox(height: 40.0),
                             GestureDetector(
                               onTap: () {
                                 if (_formkey.currentState!.validate()) {
@@ -206,10 +206,10 @@ class _LogInState extends State<LogIn> {
                                 userLogin();
                               },
                               child: Material(
-                                elevation: 5.0,
+                                elevation: 8,
                                 borderRadius: BorderRadius.circular(20),
                                 child: Container(
-                                    padding: EdgeInsets.symmetric(vertical: 8),
+                                    padding: EdgeInsets.symmetric(vertical: 4),
                                     width: 200,
                                     decoration: BoxDecoration(
                                         color: Color(0xffff5722),
@@ -229,7 +229,7 @@ class _LogInState extends State<LogIn> {
                       ),
                     ),
                   ),
-                  SizedBox(height: 20),
+                  SizedBox(height: 10),
 GestureDetector(
 onTap: () async {
   try {
@@ -292,7 +292,7 @@ onTap: () async {
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
           Image.asset(
-            'images/google.png', // asegúrate de tener este ícono en assets
+            'lib/images/googlelogo.png', // asegúrate de tener este ícono en assets
             height: 24,
           ),
           SizedBox(width: 10),
@@ -312,7 +312,7 @@ onTap: () async {
 
                   
                   SizedBox(
-                    height: 70.0,
+                    height: 30.0,
                   ),
                   GestureDetector(
                       onTap: () {
